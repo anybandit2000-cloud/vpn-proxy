@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Бесплатные прокси для Telegram</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #222222;
+    --border: #2e2e2e;
+    --text: #e8e8e8;
+    --muted: #888;
+    --accent: #2AABEE;
+    --accent-dim: #1a7ab5;
+    --green: #28c76f;
+    --green-dim: #1a8a4a;
+    --radius: 10px;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding: 0 16px 60px;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  header {
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+
+  .tg-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .tg-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #1a3a1a;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    border: 1px solid #255525;
+  }
+
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+
+  .step-num {
+    min-width: 26px;
+    height: 26px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 1px;
+  }
+
+  .step-text {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .step-text b {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .proxy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .proxy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .proxy-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .proxy-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .proxy-addr {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .proxy-status {
+    font-size: 11px;
+    color: var(--green);
+    margin-top: 2px;
+  }
+
+  .proxy-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .btn:active { transform: scale(0.97); opacity: 0.85; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--accent-dim); }
+
+  .btn-copy {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-copy:hover { background: #2a2a2a; }
+
+  .info-box {
+    background: #0d1f2d;
+    border: 1px solid #1a3a54;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #7ec8e3;
+    line-height: 1.6;
+  }
+
+  .info-box a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .loading {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  .error-box {
+    background: #1f0d0d;
+    border: 1px solid #541a1a;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #e37e7e;
+  }
+
+  .updated {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0 16px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #222;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: transform 0.25s ease;
+    z-index: 999;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 20px; }
+    .proxy-card { flex-direction: column; align-items: flex-start; }
+    .proxy-actions { width: 100%; }
+    .btn { flex: 1; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="tg-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
+      </svg>
+    </div>
+    <div class="badge">● Бесплатно</div>
+    <h1>Прокси для Telegram</h1>
+    <p class="subtitle">MTProto-прокси — добавьте одним нажатием и войдите в Telegram</p>
+  </header>
+
+  <section>
+    <h2>Как это работает</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">Нажмите кнопку <b>«Добавить в Telegram»</b> рядом с любым прокси ниже — откроется Telegram с уже заполненными данными</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">В Telegram нажмите <b>«Подключить»</b> — прокси добавится и включится автоматически</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">Теперь у вас есть доступ к Telegram. Вы можете найти наш бот и оформить <b>полный VPN</b> для всех приложений</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>Бесплатные прокси</h2>
+    <div id="proxy-list" class="proxy-list">
+      <div class="loading">Загрузка прокси...</div>
+    </div>
+    <p class="updated" id="updated-at"></p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>После входа в Telegram</h2>
+    <div class="info-box">
+      Прокси работает только для Telegram. Для полного VPN (обход блокировок во всех приложениях и браузере) —
+      найдите нашего бота в Telegram: <a href="https://t.me/YOUR_BOT" target="_blank">@YOUR_BOT</a>.
+      Там можно оформить подписку и получить ссылку для HAPP / v2rayTun.
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast">Скопировано ✓</div>
+
+<script>
+  const PROXIES_URL = 'proxies.json';
+
+  function buildTgLink(p) {
+    return `tg://proxy?server=${encodeURIComponent(p.server)}&port=${p.port}&secret=${encodeURIComponent(p.secret)}`;
+  }
+
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Скопировано ✓');
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Скопировано ✓');
+    });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  function renderProxy(p, index) {
+    const tgLink = buildTgLink(p);
+    const card = document.createElement('div');
+    card.className = 'proxy-card';
+    card.innerHTML = `
+      <div class="proxy-info">
+        <div class="proxy-label">${p.label || ('Прокси ' + (index + 1))}</div>
+        <div class="proxy-addr">${p.server}:${p.port}</div>
+        <div class="proxy-status">● Активен</div>
+      </div>
+      <div class="proxy-actions">
+        <button class="btn btn-copy" onclick="copyText('${tgLink}', this)">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Скопировать
+        </button>
+        <a class="btn btn-primary" href="${tgLink}">
+          <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+          Добавить в Telegram
+        </a>
+      </div>
+    `;
+    return card;
+  }
+
+  async function loadProxies() {
+    const list = document.getElementById('proxy-list');
+    try {
+      const resp = await fetch(PROXIES_URL + '?t=' + Date.now());
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const proxies = await resp.json();
+      list.innerHTML = '';
+      if (!proxies.length) {
+        list.innerHTML = '<div class="error-box">Прокси временно недоступны. Попробуйте позже.</div>';
+        return;
+      }
+      proxies.forEach((p, i) => list.appendChild(renderProxy(p, i)));
+      const now = new Date();
+      document.getElementById('updated-at').textContent =
+        'Обновлено: ' + now.toLocaleDateString('ru-RU') + ' · ' + now.toLocaleTimeString('ru-RU', {hour:'2-digit',minute:'2-digit'});
+    } catch (e) {
+      list.innerHTML = `<div class="error-box">Не удалось загрузить прокси. Обновите страницу или попробуйте позже.</div>`;
+    }
+  }
+
+  loadProxies();
+</script>
+</body>
+</html>
